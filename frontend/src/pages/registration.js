@@ -59,7 +59,9 @@ export default function() {
     const [registered, setRegistered] = useState(true)
     return (
         <div className="registrationPage">
+            <div className="registrationFormWrapper">
             <form className="registrationForm" onSubmit={(registered)?login:register}>
+                <h1>Welcome</h1>  
                 <input type='text' placeholder='username' name="username"></input>
                 <input type = 'password' placeholder="password" name="password"></input>
                 
@@ -67,10 +69,14 @@ export default function() {
                 <input type = 'submit' value="register" ></input>:
                 <input type = 'submit' value="login" ></input>
                 }
-            </form>
+
             <a onClick={() => {
                 setRegistered(!registered)
             }}>click here to {(registered)? "register":"login"}</a>
+            </form>
+
+            </div>
+            
         </div>
     )
 }

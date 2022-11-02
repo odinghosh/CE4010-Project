@@ -1,3 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.registrationPage{
+    background-color: aliceblue;
+    height: 100vh;
+    
+}
+
+.registrationFormWrapper{
+    position: absolute;
+    top: 20vh;
+    left: calc(50vw - 171px);
+    text-align: center;
+    background-color: white;
+    padding: 70px;
+    border-radius: 5px;
+    
+ 
+}
+
 .registrationForm input {
     display: block;
+    margin: 5px auto;
+
+    width: 200px;
+    height: 30px;
+   
 }
+
+.registrationForm input[type='submit']{
+    width: 70px;
+    background-color: cornflowerblue;
+    border: 0;
+    color:white;
+    border-radius: 5px;
+}
+
+
+

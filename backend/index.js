@@ -58,8 +58,6 @@ io.on('connection', (socket) => {
 
     socket.on("disconnect", () => {
         console.log(socketIdMap[socket.id] + 'disconnected')
-        
-
         updateDoc(doc(db, 'users',socketIdMap[socket.id]),
         {
             online: false
