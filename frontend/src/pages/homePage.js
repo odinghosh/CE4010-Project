@@ -22,6 +22,10 @@ const app = initializeApp(firebaseConfig)
 
 const db = getFirestore(app)
 
+const socket = io("http://localhost:8080")
+
+
+
 
 
 
@@ -31,18 +35,18 @@ export default function (){
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const {state} = useLocation();
-    const [socket, setSocket] = useState(null)
+     
+  
+        
+    socket.on("connect", () => {
+        console.log("connected2")
+    })
 
-    
-
-    
+   
 
     const {username} = state
 
    
-    
-
-    
 
     async function openChat(event) {
         const docRefA = doc(db, "chatRooms", username + "-" + event.target.innerHTML)
@@ -53,17 +57,11 @@ export default function (){
 
          if(docSnapA.exists()){
              navigate("../chats", {state: {chatRoomId: username + "-" + event.target.innerHTML, username: username}} )
-         }
-
-         if(docSnapB.exists()){
+         } else if(docSnapB.exists()){
              navigate("../chats", {state: {chatRoomId: event.target.innerHTML + "-"+ username, username: username}} )
+         } else {
+            socket.emit("findUser","" + (event.target.innerHTML), username)
          }
-
-
-       
-        
-
-        socket.emit("findUser","" + (event.target.innerHTML), username)
     }
     
     function trackActiveUsers() {
@@ -85,15 +83,8 @@ export default function (){
 
     useEffect(() => {
 
-        const socket = io("http://localhost:8080", {query: `username=${username}`})
-        setSocket(socket)
-
-        
-    socket.on("connect", () => {
-        console.log("connected2")
-    })
-
-
+        socket.emit("userConnected", username)
+    
         var rsa = forge.pki.rsa
         var keypair = rsa.generateKeyPair({bits: 512, e:0x10001})
         var n = (keypair.publicKey.n).toString()

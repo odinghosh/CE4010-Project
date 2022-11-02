@@ -37,16 +37,19 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    if(socket.handshake.query['username']){
-        socketIdMap[socket.id] = socket.handshake.query['username']
-        updateDoc(doc(db, 'users',socket.handshake.query['username']),
+    
+
+    socket.on("userConnected", (username) => {
+        socketIdMap[socket.id] = username
+        updateDoc(doc(db, 'users',username),
         {
             online: true
         })
 
 
         console.log(socketIdMap)
-    }
+
+    })
     socket.on("findUser", (destination, source) => {
         io.emit(destination, "findUser", source, null)
     })
