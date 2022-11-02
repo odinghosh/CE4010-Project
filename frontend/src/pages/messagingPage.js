@@ -23,6 +23,8 @@ const db = getFirestore(app)
 
 export default function() {
 
+    const navigate = useNavigate()
+
     const {state} = useLocation();
     const {chatRoomId, username} = state
     
@@ -86,8 +88,16 @@ export default function() {
 
     return (
     <div className="messagingPage">
-        <div className= "sideBar">
-            <h1>sideBar</h1>
+        <div className= "topBar">
+            <button onClick= {
+                () => {
+                    navigate("../home", {state:{username:username}})
+                    
+
+                }
+            }>Home</button>
+            <div>{chatRoomId}</div>
+            <div></div>
         </div>
 
         <div className = "messagingArea"> 

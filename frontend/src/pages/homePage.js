@@ -1,15 +1,11 @@
 import React, {useState, useEffect} from "react";
 import { ReactDOM } from "react";
-import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, QuerySnapshot, getDoc} from "firebase/firestore"
+import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, QuerySnapshot, getDoc, updateDoc} from "firebase/firestore"
 import {initializeApp} from "firebase/app"
 import {useLocation, useNavigate} from "react-router-dom"
 import {io} from "socket.io-client";
 import forge from "node-forge"
-
-
-
-
-
+import "../css/homePage.css"
 
 
 const firebaseConfig = {
@@ -26,10 +22,6 @@ const app = initializeApp(firebaseConfig)
 
 const db = getFirestore(app)
 
-const socket = io("http://localhost:8080")
-
-
-
 
 
 
@@ -39,15 +31,16 @@ export default function (){
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const {state} = useLocation();
+    const [socket, setSocket] = useState(null)
+
+    
 
     
 
     const {username} = state
-    
 
-    socket.on("connect", () => {
-        console.log("connected2")
-    })
+   
+    
 
     
 
@@ -74,7 +67,7 @@ export default function (){
     }
     
     function trackActiveUsers() {
-        const q = query(collection(db, "users"));
+        const q = query(collection(db, "users"), where("online", "==", true));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             var users = []
             querySnapshot.forEach((doc) => {
@@ -91,13 +84,23 @@ export default function (){
 
 
     useEffect(() => {
+
+        const socket = io("http://localhost:8080", {query: `username=${username}`})
+        setSocket(socket)
+
+        
+    socket.on("connect", () => {
+        console.log("connected2")
+    })
+
+
         var rsa = forge.pki.rsa
         var keypair = rsa.generateKeyPair({bits: 512, e:0x10001})
         var n = (keypair.publicKey.n).toString()
         var e = (keypair.publicKey.e).toString()
         const rsaPrivateKey = keypair.privateKey
         console.log('generated')
-        setDoc(doc(db, "users", username), {publicKeyN: n,  publicKeyE: e})
+        updateDoc(doc(db, "users", username), {publicKeyN: n,  publicKeyE: e})
         
         trackActiveUsers()
         socket.on(username, async (reqType, source, keyTransmitted) => {
@@ -135,12 +138,21 @@ export default function (){
         return () => socket.off(username)    
     },[])
 
-    return (<div>
-        <h1>Active Users</h1>
+    return (<div className="homePage">
+        <div className="topBar">
+            <button onClick={() => {
+                socket.disconnect()
+                navigate("../")
+            }}>
+                Go Back
+            </button>
+            <div>Online Users</div>
+            <div></div>
+        </div>
         <ul>
             {
             users.map((user) => {
-                return <li><button onClick={openChat}>
+                return <li><button className="activeUser" onClick={openChat}>
                     {user.username}
                     </button></li>
             })}
