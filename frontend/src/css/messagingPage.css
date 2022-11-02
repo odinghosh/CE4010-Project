@@ -1,0 +1,54 @@
+.messagingPage{
+    background-color: aliceblue;
+}
+.messagingPage {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sideBar {
+    flex: 2;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+ 
+
+}
+
+.messagingArea {
+    background-color: red;
+    flex: 8;
+    margin-right: 10px;
+   
+    height: 100vh;
+
+}
+
+.messageItem {
+    margin: 10px;
+    background-color: white;
+}
+
+.messageList ul {
+    background-color: blue;
+    height: 80vh;
+    overflow-y: scroll;
+}
+.messageBox {
+    text-align: center;
+    background-color: green;
+    height: 10vh;
+
+}
+
+.messageBox input {
+    height: 5vh;
+}
+.messageBox input[type=text]{
+    width: 75%;
+}
+
+.messageBox input[type=submit]{
+    width: 20%;
+}
