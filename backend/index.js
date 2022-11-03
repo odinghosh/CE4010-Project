@@ -40,16 +40,51 @@ io.on('connection', (socket) => {
     
 
     socket.on("userConnected", (username) => {
+        console.log(`${username} connected`)
+
+        for(let [key, value] of socketIdMap.entries()){
+            if(value == username){
+                delete socketIdMap[key]
+                socketIdMap[socket.id] = username
+                return
+            }
+        }
+
+
+
         socketIdMap[socket.id] = username
         updateDoc(doc(db, 'users',username),
         {
             online: true
         })
-
-
         console.log(socketIdMap)
+        }
+
+    )
+    
+    socket.on("userDisconnected", (username) => {
+
+            try{
+
+            console.log(`${username} disconnected`)
+            console.log(socket.id)
+           
+            updateDoc(doc(db, 'users',username),
+            {
+                online: false
+            })
+
+
+            delete socketIdMap[socket.id]
+            console.log(socketIdMap)
+        } catch {
+
+        }
+    
+       
 
     })
+
     socket.on("findUser", (destination, source) => {
         io.emit(destination, "findUser", source, null)
     })
@@ -60,13 +95,21 @@ io.on('connection', (socket) => {
     console.log("a user has connected")
 
     socket.on("disconnect", () => {
+
+        try{
+      
         console.log(socketIdMap[socket.id] + 'disconnected')
         updateDoc(doc(db, 'users',socketIdMap[socket.id]),
         {
             online: false
         })
 
-        socketIdMap.delete(socket.id)
+        delete socketIdMap[socket.id]
+    
+    } catch {
+        
+    }
+        
 
     })
 })

@@ -6,6 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom"
 import {io} from "socket.io-client";
 import forge from "node-forge"
 import "../css/homePage.css"
+import {socket} from "../socketConnection"
 
 
 const firebaseConfig = {
@@ -22,7 +23,7 @@ const app = initializeApp(firebaseConfig)
 
 const db = getFirestore(app)
 
-const socket = io("http://localhost:8080")
+
 
 
 
@@ -35,16 +36,8 @@ export default function (){
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const {state} = useLocation();
-     
-  
-        
-    socket.on("connect", () => {
-        console.log("connected2")
-    })
-
-   
-
     const {username} = state
+  
 
    
 
@@ -82,7 +75,7 @@ export default function (){
 
 
     useEffect(() => {
-
+    
         socket.emit("userConnected", username)
     
         var rsa = forge.pki.rsa
@@ -132,7 +125,7 @@ export default function (){
     return (<div className="homePage">
         <div className="topBar">
             <button onClick={() => {
-                socket.disconnect()
+                socket.emit("userDisconnected", username);
                 navigate("../")
             }}>
                 Go Back
