@@ -4,7 +4,7 @@ import "../css/registrationPage.css"
 import {initializeApp} from "firebase/app"
 import { Navigate, useNavigate } from "react-router-dom";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
-import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc} from "firebase/firestore"
+import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore"
 import forge from "node-forge"
 
 const firebaseConfig = {
@@ -34,8 +34,36 @@ export default function() {
 
         createUserWithEmailAndPassword(auth, username + "@test.com", password)
         .then((userCredential) => {
+            
+
+            
+    
+            var rsa = forge.pki.rsa
+            var keypair = rsa.generateKeyPair({bits: 512, e:0x10001})
+            var n = (keypair.publicKey.n).toString()
+            var e = (keypair.publicKey.e).toString()
+            const rsaPrivateKey = keypair.privateKey
+
+            var foo = JSON.stringify({
+                privateKeyPem: forge.pki.privateKeyToPem(rsaPrivateKey)
+            })
+
+            localStorage.setItem(username, foo)
+
+
+            // foo = JSON.parse(foo)
+            // var privateKey = forge.pki.privateKeyFromPem(foo.privateKeyPem)
+    
+            // console.log(privateKey)    
+            //const key2 = JSON.parse(JSON.stringify(rsaPrivateKey))
+        
+            console.log('generated')
             setDoc(doc(db, "users", username), 
-            {online: false})
+            {online: false,
+             publicKeyN: n,  
+             publicKeyE: e, 
+             inbox: []})
+         
         })
 
     }
