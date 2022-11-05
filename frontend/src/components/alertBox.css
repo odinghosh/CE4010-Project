@@ -1,0 +1,51 @@
+.background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 120vh;
+    z-index: 1;
+    background-color: black;
+    opacity: 0.5;
+   
+
+
+}
+.outerBox{
+    padding: 5px;
+    position:absolute;
+    z-index: 2;
+    background-color: white;
+    top: calc(30vh - 50px);
+    left:calc(50vw - 155px);
+    width: 300px;
+    height: 100px;
+    text-align: center;
+    border-radius: 5px;
+    
+
+}
+
+.close {
+    position: relative;
+    width: 50px;
+    left: calc(50% - 60px) ;
+}
+
+.outerBox p {
+    margin-top: 10px;
+   display: block;
+}
+
+.close {
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 5px;
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    display: block;
+}
+

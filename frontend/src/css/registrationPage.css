@@ -38,5 +38,17 @@
     border-radius: 5px;
 }
 
+.registrationFormWrapper button {
+    width: 70px;
+    height: 30px;
+    background-color: white;
+    border: 0;
+    color:black;
+    border: 1px;
+    border-style: solid;
+    border-radius: 5px;
+
+}
+
 
 

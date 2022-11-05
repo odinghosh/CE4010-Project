@@ -9,6 +9,7 @@ import "../css/homePage.css"
 import {socket} from "../socketConnection"
 
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyA-EBrDm3FjdRmjwAQGU_1ocSKYoGN-BYQ",
     authDomain: "ce4010-project.firebaseapp.com",
@@ -24,24 +25,14 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 
-
-
-
-
-
-
-
 export default function (){
 
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
+    
     const {state} = useLocation();
     const {username} = state
 
-
-  
-
-   
 
     async function openChat(event) {
         const docRefA = doc(db, "chatRooms", username + "-" + event.target.innerHTML)
@@ -51,9 +42,9 @@ export default function (){
         const docSnapB = await getDoc(docRefB)
 
          if(docSnapA.exists()){
-             navigate("../chats", {state: {chatRoomId: username + "-" + event.target.innerHTML, username: username}} )
+             navigate("../chats", {state: {chatRoomId: username + "-" + event.target.innerHTML, username: username}})
          } else if(docSnapB.exists()){
-             navigate("../chats", {state: {chatRoomId: event.target.innerHTML + "-"+ username, username: username}} )
+            navigate("../chats", {state: {chatRoomId: event.target.innerHTML + "-"+ username, username: username}}) 
          } else {
             //socket.emit("findUser","" + (event.target.innerHTML), username)
 
@@ -68,7 +59,7 @@ export default function (){
             var serverName = username + "-" + event.target.innerHTML
             localStorage.setItem(username+"-"+event.target.innerHTML, key)
             key = publicKey.encrypt(key)
-            console.log(key)
+            //console.log(key)
     
             updateDoc(docRefC, {
                 inbox: arrayUnion({[serverName]: key})
@@ -105,7 +96,7 @@ export default function (){
                         var serverName = Object.keys(array[i])[0]
                         var encryptedAesKey = Object.values(array[i])[0]
                         var aesKey = rsaPrivateKey.decrypt(encryptedAesKey)
-                        console.log(aesKey)
+                        //console.log(aesKey)
                         localStorage.setItem(serverName, aesKey)
 
                     }
@@ -144,15 +135,17 @@ export default function (){
     },[])
 
     return (<div className="homePage">
+        
         <div className="topBar">
             <button onClick={() => {
                 socket.emit("userDisconnected", username);
                 navigate("../")
             }}>
-                Go Back
+                Log Out
             </button>
-            <div>Online Users</div>
+            <div>{username}</div>
             <div></div>
+            
         </div>
         <ul>
             {

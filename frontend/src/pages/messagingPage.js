@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactDOM, useState, useEffect } from "react";
+import { ReactDOM, useState, useEffect, useRef} from "react";
 import "../css/messagingPage.css"
 import {useLocation, useNavigate} from "react-router-dom"
 import {initializeApp} from "firebase/app"
@@ -22,6 +22,7 @@ const db = getFirestore(app)
 
 
 export default function() {
+    
 
     const navigate = useNavigate()
 
@@ -29,7 +30,7 @@ export default function() {
     const {chatRoomId, username} = state
     
     var aesKey = localStorage.getItem(chatRoomId)
-    console.log(aesKey)
+    //console.log(aesKey)
 
     var cipher = forge.cipher.createCipher('AES-CBC', localStorage.getItem(chatRoomId))
     var decipher = forge.cipher.createDecipher('AES-CBC', localStorage.getItem(chatRoomId))
@@ -38,9 +39,12 @@ export default function() {
 
     const [messages, setMessages] = useState([])
 
+    const [inputText, setInputText] = useState('')
+
     // function to send a new message to firebase
     function sendMessageToFirebase(event){
         event.preventDefault()
+        setInputText('')
 
         var iv = forge.random.getBytesSync(16)
         console.log(iv)
@@ -48,7 +52,7 @@ export default function() {
         cipher.update(forge.util.createBuffer(event.target.text.value))
         cipher.finish()
         var encryptedText = cipher.output
-        console.log(encryptedText)
+        //console.log(encryptedText)
     
         // add data to firebase
         const docRef = addDoc(collection(db, `/chatRooms/${chatRoomId}/messages`), 
@@ -74,15 +78,17 @@ export default function() {
                 messages.push({username: doc.data()['username'], text:decipher.output.data,
             time: doc.data()['time'].toDate().getTime()})
             })
-            console.log(messages.sort((a,b) => {
+            messages.sort((a,b) => {
                 return (a.time - b.time)
-            }))
+            })
             setMessages(messages)
+          
         })
     }
     
     useEffect(()=> {
        listenToFirebase()
+      
     }, [])
 
 
@@ -105,7 +111,7 @@ export default function() {
                 <ul>
                     {
                         messages.map(message => {
-                            return (
+                            return (<li >
                                 <div className="messageItem">
                                     <div className="messageItemHeader">
                                         {message.username}
@@ -116,17 +122,27 @@ export default function() {
                                     </div>
 
                                 </div>
+                                </li>
                             )
                         })
                     }
+
+                    <li ref={(curRef) =>{
+                        try{
+                        curRef.scrollIntoView()
+                        } catch {}
+
+                    }}></li>
 
                 </ul>
 
             </div>
             <div className="messageBox">
                 <form onSubmit={sendMessageToFirebase}>
-                <input type="text" name="text"></input>
-                <input type="submit"></input>
+                <input type="text" name="text" value={inputText} onChange={(e)=> {
+                    setInputText(e.target.value)
+                }}></input>
+                <input type="submit" value='send'></input>
                 </form>
 
             </div>

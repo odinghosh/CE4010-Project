@@ -111,12 +111,12 @@ body::-webkit-scrollbar{
 
 }
 .messageBox input[type=text]{
-    width: 80%;
+    width: calc(80% - 70px);
     border-radius: 5px 0 0 5px;
 }
 
 .messageBox input[type=submit]{
-    width: 100px;
+    width: 70px;
     background-color: cornflowerblue;
     color: white;
     border-radius: 0 5px 5px 0;

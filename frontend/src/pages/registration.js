@@ -6,6 +6,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore"
 import forge from "node-forge"
+import AlertBox from "../components/alertBox";
+
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyA-EBrDm3FjdRmjwAQGU_1ocSKYoGN-BYQ",
@@ -27,19 +31,20 @@ export default function() {
 
     const navigate = useNavigate()
 
+    const [showAlert, setShowAlert] = useState(false)
+    const [wrongCredential, setWrongCredential] = useState(false)
+    const [generating, setGenerating] = useState(false)
+
     function register(event) {
         event.preventDefault()
         var username = event.target.username.value
         var password = event.target.password.value
+        setGenerating(true)
 
         createUserWithEmailAndPassword(auth, username + "@test.com", password)
         .then((userCredential) => {
-            
-
-            
-    
             var rsa = forge.pki.rsa
-            var keypair = rsa.generateKeyPair({bits: 512, e:0x10001})
+            var keypair = rsa.generateKeyPair({bits: 2048, e:0x10001})
             var n = (keypair.publicKey.n).toString()
             var e = (keypair.publicKey.e).toString()
             const rsaPrivateKey = keypair.privateKey
@@ -50,19 +55,15 @@ export default function() {
 
             localStorage.setItem(username, foo)
 
-
-            // foo = JSON.parse(foo)
-            // var privateKey = forge.pki.privateKeyFromPem(foo.privateKeyPem)
     
-            // console.log(privateKey)    
-            //const key2 = JSON.parse(JSON.stringify(rsaPrivateKey))
-        
             console.log('generated')
             setDoc(doc(db, "users", username), 
             {online: false,
              publicKeyN: n,  
              publicKeyE: e, 
              inbox: []})
+
+            navigate("../home", {state: {username:username}})
          
         })
 
@@ -76,10 +77,14 @@ export default function() {
         signInWithEmailAndPassword(auth, username + "@test.com", password)
         .then((userCredential) => {
             const user = userCredential.user
-
-        
-        console.log(user)
-        navigate("../home", {state: {username:username}})
+        //console.log(user)
+        if(localStorage.getItem(username) === null){
+            setShowAlert(true)
+        } else {
+            navigate("../home", {state: {username:username}})
+        }
+        }).catch(() => {
+            setWrongCredential(true)
         })
 
     }
@@ -87,6 +92,19 @@ export default function() {
     const [registered, setRegistered] = useState(true)
     return (
         <div className="registrationPage">
+            <AlertBox trigger={generating} onClickFunction={()=> {setGenerating(!showAlert)}}>
+                Registering and Generating RSA keys. Please wait
+            </AlertBox>
+
+            <AlertBox trigger={showAlert} onClickFunction={()=> {setShowAlert(!showAlert)}}>
+            Error! Please use the same device as where this account was made
+            </AlertBox>
+
+
+            <AlertBox trigger={wrongCredential} onClickFunction={()=> {setWrongCredential(!wrongCredential)}}>
+            Error! Wrong credentials used
+            </AlertBox>
+            
             <div className="registrationFormWrapper">
             <form className="registrationForm" onSubmit={(registered)?login:register}>
                 <h1>Welcome</h1>  
@@ -98,10 +116,11 @@ export default function() {
                 <input type = 'submit' value="login" ></input>
                 }
 
-            <a onClick={() => {
-                setRegistered(!registered)
-            }}>click here to {(registered)? "register":"login"}</a>
+            
             </form>
+            <button onClick={() => {
+                setRegistered(!registered)
+            }}>{(registered)? "register":"login"}</button>
 
             </div>
             
