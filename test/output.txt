@@ -1,0 +1,26 @@
+AES official test
+PS C:\Users\user\Desktop\trial> node index.js
+key:  ☺☻♥♦♣♠
+♫☼
+key in hex:  000102030405060708090a0b0c0d0e0f
+ÞNwÛö­↨2
+òI
+iv in hex:  e9ed0e320d9ade4e77dbf6ad170af249
+plaintext:  00112233445566778899aabbccddeeff
+Encrypted text:  ByteStringBuffer { data: '', read: 0, _constructedStringLength: 48 }
+Encrypted text in bytes:  ù~¿Y▼ûls↓W2¸‼EIÍ±¡;▲?+>↑Rbdîd◄ãY↔2iAx↓ë0
+decrypted text:  00112233445566778899aabbccddeeff    îd◄ãY↔2iAx↓ë0
+decrypted text:  00112233445566778899aabbccddeeff
+Output check:  true
+
+AES Hello World test
+PS C:\Users\user\Desktop\trial> node index.js
+key:  ↨¤Ú¡§▲▼Ðñã⌂`|
+key in hex:  17a4daa1a71e1fd0f19f55b6e37f607c
+iv:  hL↑£]Àh¥E5üüJ
+iv in hex:  688f4c8b18a35dc068a5459535fcfc4a
+plaintext:  Hello World
+Encrypted text:  ByteStringBuffer { data: '', read: 0, _constructedStringLength: 16 }
+Encrypted text in bytes:  '£9á¥a♂ÌgP!q ▼
+decrypted text:  Hello World
+Output check:  true
