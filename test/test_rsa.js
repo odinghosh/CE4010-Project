@@ -1,7 +1,7 @@
 var forge = require('node-forge');
 
 /*  Use line 6 to randomly create a key
-    Use line 7 to test AES-128 example vector
+    Use line 7 to test RSA
 */
 var rsa = forge.pki.rsa
 var keypair = rsa.generateKeyPair({bits: 1024, e:0x10001})
