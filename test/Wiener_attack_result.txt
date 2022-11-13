@@ -1,0 +1,50 @@
+Wiener's attack condition: d < 73.2837786890389
+e/n = 2.8052406302064054e-05
+
+Using Extended Euclid's algorithm,
+65537 = 0*2336234521 + 65537
+2336234521 = 35647*65537 + 37082
+65537 = 1*37082 + 28455
+37082 = 1*28455 + 8627
+28455 = 3*8627 + 2574
+8627 = 3*2574 + 905
+2574 = 2*905 + 764
+905 = 1*764 + 141
+764 = 5*141 + 59
+141 = 2*59 + 23
+59 = 2*23 + 13
+23 = 1*13 + 10
+13 = 1*10 + 3
+10 = 3*3 + 1
+3 = 3*1 + 0
+
+convergents of e/n:  [0, 35647, 1, 1, 3, 3, 2, 1, 5, 2, 2, 1, 1, 3, 3]
+Start continued fractions...
+convergent 1: 2.805285157236233e-05
+convergent < e/n == False
+convergent 2: 2.8052064631956913e-05
+convergent < e/n == True
+convergent 3: 2.8052458096640718e-05
+convergent < e/n == False
+convergent 4: 2.80524018867244e-05
+convergent < e/n == True
+convergent 5: 2.8052406774534268e-05
+convergent < e/n == False
+convergent 6: 2.8052406128974375e-05
+convergent < e/n == True
+convergent 7: 2.8052406324341183e-05
+convergent < e/n == False
+convergent 8: 2.8052406300427925e-05
+convergent < e/n == True
+convergent 9: 2.805240630235723e-05
+convergent < e/n == False
+convergent 10: 2.8052406301996688e-05
+convergent < e/n == True
+convergent 11: 2.80524063021009e-05
+convergent < e/n == False
+convergent 12: 2.8052406302057596e-05
+convergent < e/n == True
+convergent 13: 2.8052406302064657e-05
+convergent < e/n == False
+convergent 14: 2.8052406302064057e-05
+convergent < e/n == False

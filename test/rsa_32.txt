@@ -1,0 +1,44 @@
+RSA 32 bit keypair
+
+keypair: {
+  privateKey: {
+    n: BigInteger { data: [Array], t: 2, s: 0 },
+    e: BigInteger { data: [Array], t: 1, s: 0 },
+    d: BigInteger { data: [Array], t: 1, s: 0 },
+    p: BigInteger { data: [Array], t: 1, s: 0 },
+    q: BigInteger { data: [Array], t: 1, s: 0 },
+    dP: BigInteger { data: [Array], t: 1, s: 0 },
+    dQ: BigInteger { data: [Array], t: 1, s: 0 },
+    qInv: BigInteger { data: [Array], t: 1, s: 0 },
+    decrypt: [Function (anonymous)],
+    sign: [Function (anonymous)]
+  },
+  publicKey: {
+    n: BigInteger { data: [Array], t: 2, s: 0 },
+    e: BigInteger { data: [Array], t: 1, s: 0 },
+    encrypt: [Function (anonymous)],
+    verify: [Function (anonymous)]
+  }
+}
+public key:  {
+  n: BigInteger { data: [ 188750873, 8 ], t: 2, s: 0 },
+  e: BigInteger { data: [ 65537 ], t: 1, s: 0 },
+  encrypt: [Function (anonymous)],
+  verify: [Function (anonymous)]
+}
+private key:  {
+  n: BigInteger { data: [ 188750873, 8 ], t: 2, s: 0 },
+  e: BigInteger { data: [ 65537 ], t: 1, s: 0 },
+  d: BigInteger { data: [ 214909973, 0 ], t: 1, s: 0 },
+  p: BigInteger { data: [ 62851 ], t: 1, s: 0 },
+  q: BigInteger { data: [ 37171 ], t: 1, s: 0 },
+  dP: BigInteger { data: [ 25823, 3419 ], t: 1, s: 0 },
+  dQ: BigInteger { data: [ 30203, 5781 ], t: 1, s: 0 },
+  qInv: BigInteger { data: [ 9621 ], t: 1, s: 0 },
+  decrypt: [Function (anonymous)],
+  sign: [Function (anonymous)]
+}
+n = 2336234521
+e = 65537
+d = 214909973
+Wiener's condition: d < 73.28377868903891
