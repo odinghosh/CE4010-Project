@@ -4,7 +4,7 @@ var forge = require('node-forge');
     Use line 7 to test RSA
 */
 var rsa = forge.pki.rsa
-var keypair = rsa.generateKeyPair({bits: 16, e:0x10001})
+var keypair = rsa.generateKeyPair({bits: 32, e:0x10001})
 var n = (keypair.publicKey.n).toString()
 var e = (keypair.publicKey.e).toString()
 var d = (keypair.privateKey.d).toString()
