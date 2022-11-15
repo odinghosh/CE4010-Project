@@ -1,0 +1,20 @@
+AES official test
+PS C:\Users\user\Documents\CE4010-Project\test> node test_aes.js
+key in hex:  6ed76d2d97c69fd1339589523931f2a6cff554b15f738f21ec72dd97a7330907
+iv in hex:  851e8764776e6796aab722dbb644ace8
+plaintext:  6282b8c05c5c1530b97d4816ca434762
+
+Encrypted text:  6acc04142e100a65f51b97adf5172c41
+Encrypted text==AES-256 official ciphertext:  true
+
+Decrypted text:  6282b8c05c5c1530b97d4816ca434762
+
+AES Hello World test
+PS C:\Users\user\Documents\CE4010-Project\test> node test_aes.js
+key in hex:  3973a607f89f8963d88369ea83ef8a68af3e0487fdf60698fe93414210d595ea
+iv in hex:  8b50c57b865d5e251f12a8e6ed42815c
+plaintext:  Hello World
+
+Encrypted text:  3d9410505072631d688fdc1e8b6cd614
+
+Decrypted text:  Hello World
