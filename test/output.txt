@@ -1,26 +1,20 @@
 AES official test
-PS C:\Users\user\Desktop\trial> node index.js
-key:  ☺☻♥♦♣♠
-♫☼
-key in hex:  000102030405060708090a0b0c0d0e0f
-ÞNwÛö­↨2
-òI
-iv in hex:  e9ed0e320d9ade4e77dbf6ad170af249
-plaintext:  00112233445566778899aabbccddeeff
-Encrypted text:  ByteStringBuffer { data: '', read: 0, _constructedStringLength: 48 }
-Encrypted text in bytes:  ù~¿Y▼ûls↓W2¸‼EIÍ±¡;▲?+>↑Rbdîd◄ãY↔2iAx↓ë0
-decrypted text:  00112233445566778899aabbccddeeff    îd◄ãY↔2iAx↓ë0
-decrypted text:  00112233445566778899aabbccddeeff
-Output check:  true
+PS C:\Users\user\Documents\CE4010-Project\test> node test_aes.js
+key in hex:  6ed76d2d97c69fd1339589523931f2a6cff554b15f738f21ec72dd97a7330907
+iv in hex:  851e8764776e6796aab722dbb644ace8
+plaintext:  6282b8c05c5c1530b97d4816ca434762
+
+Encrypted text:  6acc04142e100a65f51b97adf5172c41
+Encrypted text==AES-256 official ciphertext:  true
+
+Decrypted text:  6282b8c05c5c1530b97d4816ca434762
 
 AES Hello World test
-PS C:\Users\user\Desktop\trial> node index.js
-key:  ↨¤Ú¡§▲▼Ðñã⌂`|
-key in hex:  17a4daa1a71e1fd0f19f55b6e37f607c
-iv:  hL↑£]Àh¥E5üüJ
-iv in hex:  688f4c8b18a35dc068a5459535fcfc4a
+PS C:\Users\user\Documents\CE4010-Project\test> node test_aes.js
+key in hex:  3973a607f89f8963d88369ea83ef8a68af3e0487fdf60698fe93414210d595ea
+iv in hex:  8b50c57b865d5e251f12a8e6ed42815c
 plaintext:  Hello World
-Encrypted text:  ByteStringBuffer { data: '', read: 0, _constructedStringLength: 16 }
-Encrypted text in bytes:  '£9á¥a♂ÌgP!q ▼
-decrypted text:  Hello World
-Output check:  true
+
+Encrypted text:  3d9410505072631d688fdc1e8b6cd614
+
+Decrypted text:  Hello World
