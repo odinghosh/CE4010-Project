@@ -55,7 +55,7 @@ export default function (){
             new forge.jsbn.BigInteger(docSnap.data()['publicKeyE']))
             
             //create new aes key
-            var key = forge.random.getBytesSync(16);
+            var key = forge.random.getBytesSync(32);
             var serverName = username + "-" + event.target.innerHTML
             localStorage.setItem(username+"-"+event.target.innerHTML, key)
             key = publicKey.encrypt(key)

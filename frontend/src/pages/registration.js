@@ -49,11 +49,11 @@ export default function() {
             var e = (keypair.publicKey.e).toString()
             const rsaPrivateKey = keypair.privateKey
 
-            var foo = JSON.stringify({
+            var jsonKey = JSON.stringify({
                 privateKeyPem: forge.pki.privateKeyToPem(rsaPrivateKey)
             })
 
-            localStorage.setItem(username, foo)
+            localStorage.setItem(username, jsonKey)
 
     
             console.log('generated')
