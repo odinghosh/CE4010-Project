@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { ReactDOM } from "react";
-import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, QuerySnapshot, getDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore"
+import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, setDoc, doc, QuerySnapshot, getDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc} from "firebase/firestore"
 import {initializeApp} from "firebase/app"
 import {useLocation, useNavigate} from "react-router-dom"
 import {io} from "socket.io-client";
@@ -25,26 +25,30 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 
-export default function (){
+export default function (props){
 
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     
-    const {state} = useLocation();
-    const {username} = state
-
+    //const {state} = useLocation();
+    //const {username} = state
+    const username = props.username
 
     async function openChat(event) {
         const docRefA = doc(db, "chatRooms", username + "-" + event.target.innerHTML)
         const docRefB = doc(db, "chatRooms", event.target.innerHTML + "-"+username)
+        setDoc(doc(db,`users/${username}/friends`, event.target.innerHTML), {newMessage:false})
+        props.setTarget(event.target.innerHTML)
 
         const docSnapA = await getDoc(docRefA)
         const docSnapB = await getDoc(docRefB)
 
          if(docSnapA.exists()){
-             navigate("../chats", {state: {chatRoomId: username + "-" + event.target.innerHTML, username: username}})
-         } else if(docSnapB.exists()){
-            navigate("../chats", {state: {chatRoomId: event.target.innerHTML + "-"+ username, username: username}}) 
+            // navigate("../chats", {state: {chatRoomId: username + "-" + event.target.innerHTML, username: username}})
+            props.setChatRoom(username + "-" + event.target.innerHTML)
+        } else if(docSnapB.exists()){
+            props.setChatRoom(event.target.innerHTML + "-"+ username)
+            //navigate("../chats", {state: {chatRoomId: event.target.innerHTML + "-"+ username, username: username}}) 
          } else {
             //socket.emit("findUser","" + (event.target.innerHTML), username)
 
@@ -66,13 +70,17 @@ export default function (){
             })
 
             await setDoc(doc(db, "chatRooms", serverName), {})
-            navigate("../chats", {state: {chatRoomId: serverName, username: username}}) 
+            //navigate("../chats", {state: {chatRoomId: serverName, username: username}}) 
+            props.setChatRoom(serverName)
          }
+         
     }
     
     function trackActiveUsers() {
-        const q = query(collection(db, "users"));
+        console.log(username)
+        const q = query(collection(db, `users/${username}/friends`));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            console.log('not')
             var users = []
             querySnapshot.forEach((doc) => {
                 if(doc.id != username){
@@ -82,7 +90,7 @@ export default function (){
             setUsers(users)
         })
 
-        return unsubscribe
+        return ()=>{unsubscribe()}
         
     }
 
@@ -136,23 +144,20 @@ export default function (){
 
     return (<div className="homePage">
         
-        <div className="topBar">
-            <button onClick={() => {
-                socket.emit("userDisconnected", username);
-                navigate("../")
-            }}>
-                Log Out
-            </button>
-            <div>{username}</div>
-            <div></div>
-            
-        </div>
+       
         <ul>
             {
             users.map((user) => {
-                return <li><button className="activeUser" onClick={openChat}>
+                return <li><button  className="activeUser" onClick={openChat}>
                     {user.username}
-                    </button></li>
+                    
+                    </button>
+                    <button className='removeUser' onClick={(e) => {
+                        deleteDoc(doc(db, `users/${username}/friends`, user.username))
+                        
+                    }}> X </button>
+                    
+                    </li>
             })}
         </ul>
 

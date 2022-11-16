@@ -3,7 +3,7 @@ import { ReactDOM, useState, useEffect, useRef} from "react";
 import "../css/messagingPage.css"
 import {useLocation, useNavigate} from "react-router-dom"
 import {initializeApp} from "firebase/app"
-import {addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, serverTimestamp} from "firebase/firestore"
+import {doc,setDoc,addDoc, getFirestore, collection, getDocs, query, where, onSnapshot, serverTimestamp} from "firebase/firestore"
 import forge from "node-forge"
 
 const firebaseConfig = {
@@ -21,13 +21,16 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 
-export default function() {
+export default function(props) {
     
 
     const navigate = useNavigate()
 
-    const {state} = useLocation();
-    const {chatRoomId, username} = state
+    //const {state} = useLocation();
+    //const {chatRoomId, username} = state
+    const chatRoomId = props.chatRoomId
+    const username = props.username
+    const targetName = props.targetName
     
     var aesKey = localStorage.getItem(chatRoomId)
     //console.log(aesKey)
@@ -45,6 +48,7 @@ export default function() {
     function sendMessageToFirebase(event){
         event.preventDefault()
         setInputText('')
+        setDoc(doc(db,`users/${targetName}/friends`, username), {newMessage:true})
 
         var iv = forge.random.getBytesSync(16)
         console.log(iv)
@@ -89,22 +93,12 @@ export default function() {
     useEffect(()=> {
        listenToFirebase()
       
-    }, [])
+    }, [chatRoomId])
 
 
     return (
     <div className="messagingPage">
-        <div className= "topBar">
-            <button onClick= {
-                () => {
-                    navigate("../home", {state:{username:username}})
-                    
-
-                }
-            }>Home</button>
-            <div>{chatRoomId}</div>
-            <div></div>
-        </div>
+        
 
         <div className = "messagingArea"> 
             <div className="messageList">
@@ -139,7 +133,7 @@ export default function() {
             </div>
             <div className="messageBox">
                 <form onSubmit={sendMessageToFirebase}>
-                <input type="text" name="text" value={inputText} onChange={(e)=> {
+                <input type="text" name="text" value={inputText} placeholder="Send a message" onChange={(e)=> {
                     setInputText(e.target.value)
                 }}></input>
                 <input type="submit" value='send'></input>

@@ -10,7 +10,7 @@ body{
   
 .messagingPage{
  
-    background-color: aliceblue;
+    background-color: #424549;
    
 }
 .messagingPage {
@@ -19,41 +19,7 @@ body{
   
 }
 
-.topBar {
-    padding: 0;
-    margin: 0;
-    height: 50px;
-    background-color: white;
-    border: 0;
-    
-    border-bottom: 1px;
-    border-color: lightgray;
-    border-style: solid;
-    display: flex;
-    justify-content: space-between;
-    
-}
 
-.topBar div {
-    text-align: left;
-    margin-right: 60px;
-    font-weight: bold;
-    font-size: large;
-    margin-top: 15px
-
-}
-
-.topBar button{
-    width: 100px;
-    height: 30px;
-    margin-top: 10px;
-    margin-left: 5px;
-    border: 0;
-    color: white;
-    border-radius: 5px;
-    background-color: cornflowerblue;
-    
-}
 
 
 
@@ -68,20 +34,24 @@ body{
 }
 
 .messageItem {
-    margin: 10px;
+    margin: 2px;
+  
+    margin-left: 20px;
     border: 1px;
     min-height: 50px;
-    border-color: lightgray;
-    border-style: solid;
-    background-color: white;
+    color: white;
     padding: 5px;
+   
 }
 
 .messageItemHeader{
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 
 }
+
+
+
 
 .messageList ul {
     /* background-color: blue; */
@@ -99,24 +69,34 @@ body::-webkit-scrollbar{
 .messageBox {
     text-align: center;
     /* background-color: green; */
+
     height: 10vh;
-    width: 100vw;
+    width: 100%;
 
 }
 
 .messageBox input {
+    margin-top: 15px;
     height: 30px;
    
     border: 0;
 
 }
 .messageBox input[type=text]{
-    width: calc(80% - 70px);
-    border-radius: 5px 0 0 5px;
+    width: calc(90%);
+    color: white;
+    padding-left: 10px;
+    background-color: #2F3136;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.messageBox input[type=text]::placeholder{
+  color: white;
+  padding-left: 10px;
 }
 
 .messageBox input[type=submit]{
-    width: 70px;
+    width: 0px;
     background-color: cornflowerblue;
     color: white;
     border-radius: 0 5px 5px 0;

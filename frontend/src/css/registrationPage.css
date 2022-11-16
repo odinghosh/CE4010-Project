@@ -1,10 +1,12 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 
 .registrationPage{
-    background-color: aliceblue;
+    color: white;
+    background-color: #424549;
     height: 100vh;
     
 }
@@ -14,7 +16,7 @@
     top: 20vh;
     left: calc(50vw - 171px);
     text-align: center;
-    background-color: white;
+    background-color: #36393e;
     padding: 70px;
     border-radius: 5px;
     
@@ -30,22 +32,40 @@
    
 }
 
+.registrationForm input{
+    border: 0;
+    background-color: #23272a;
+    border-radius: 5px;
+    height: 40px;
+    color: white;
+   
+ }
+
+ .registrationForm input::placeholder{
+    
+    color: white;
+    text-align: center;
+   
+ }
+
+
 .registrationForm input[type='submit']{
     width: 70px;
-    background-color: cornflowerblue;
+    background-color: #7289da;
     border: 0;
     color:white;
     border-radius: 5px;
 }
 
+
+
 .registrationFormWrapper button {
     width: 70px;
-    height: 30px;
-    background-color: white;
+    height: 40px;
+    color: white;
     border: 0;
-    color:black;
-    border: 1px;
-    border-style: solid;
+    background-color:#23272a;
+  
     border-radius: 5px;
 
 }
